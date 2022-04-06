@@ -36,7 +36,8 @@ jobs:
       - name: conditional step when event name is pull request
         if: ${{ github.event_name == 'pull_request' }}
         run: echo "This event is a pull request"
-        else:
+        
+        if: ${{ !github.event_name == 'pull_request' }}
         run: echo "This is Definitely NOT a pull request."
       
       - name: List files in the repository
