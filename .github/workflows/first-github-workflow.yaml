@@ -7,6 +7,7 @@ jobs:
     name: Exploring GitHub Actions
     runs-on: ubuntu-latest
     steps:
+      # run uses the operating systems default shell.
       - run: echo "Name - ${{ github.event.inputs.name }}"
       - run: echo "Deploy code - ${{ github.event.inputs.deploy }}"
       
@@ -20,6 +21,8 @@ jobs:
       - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       
       # Use Action located in https://github.com/actions
+      # The uses keyword is what tell github that this is an action.
+      # The 'actions/' is location on github
       - name: Check out repository code
         uses: actions/checkout@v2  
       
@@ -37,6 +40,7 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       
+      # With actions, we can pass parameters using the with keyword.
       - name: Setup dotnet on runner
         uses: actions/setup-dotnet@v1
         with:
@@ -45,11 +49,14 @@ jobs:
       - name: Display dotnet version
         run: dotnet --version
       
+      # Each runner has certain tools already preconfigured, and you can list those tools by using
+      # this tool_cache variable in the runner context collection
       - run: echo "The preinstalled tools are located here on the runner ${{ runner.tool_cache }}."
       
       - name: List files in tool cache
         run: |
           ls ${{ runner.tool_cache }}
       
+      # the job context gives information about the currently running job.
       - run: echo "This job's status is ${{ job.status }}."
 
